@@ -10,7 +10,6 @@
             --buaa-blue: #004098; 
             --buaa-light: #edf2f9; 
             --text-main: #2c3e50; 
-            /* 强制将 Waline 的主题色替换为北航蓝 */
             --waline-theme-color: #004098 !important;
             --waline-active-color: #002d72 !important;
         }
@@ -18,49 +17,55 @@
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif; 
             line-height: 1.6; color: var(--text-main); margin: 0; 
-            /* 整体背景改为极浅的蓝灰渐变，显得更干净 */
             background: linear-gradient(135deg, #f4f7f9 0%, #e2ebf3 100%); 
             min-height: 100vh; -webkit-font-smoothing: antialiased; 
         }
 
-        /* --- 2. 头部：航天蓝渐变与光晕 --- */
+        /* --- 2. 头部：航天蓝渐变背景 --- */
         .header { 
             background: linear-gradient(135deg, #00285e, #004098, #005aa0); 
-            color: white; padding: 45px 20px 55px; text-align: center; 
+            color: white; 
+            /* 增加了顶部内边距，给大队徽腾出空间 */
+            padding: 50px 20px 60px; 
+            text-align: center; 
             border-bottom-left-radius: 35px; border-bottom-right-radius: 35px; 
             box-shadow: 0 10px 30px rgba(0, 64, 152, 0.25);
             position: relative; overflow: hidden;
         }
-        /* 添加一点纯代码的左上角背景高光 */
         .header::before {
             content: ''; position: absolute; top: -50%; left: -20%; width: 150%; height: 150%;
             background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 60%);
             transform: rotate(30deg); pointer-events: none;
         }
 
-        /* --- 3. 队徽：呼吸悬浮动画 --- */
+        /* --- 3. 队徽：加大尺寸 + 优雅呼吸动画 --- */
         .team-logo {
-            width: 85px; height: 85px; object-fit: contain;
-            margin-bottom: 15px;
-            border-radius: 50%; /* 把边框变圆 */
-            box-shadow: 0 0 0 4px rgba(255,255,255,0.2), 0 8px 16px rgba(0,0,0,0.2); 
-            background: white; padding: 4px;
+            /* 【关键修改】尺寸从 85px 加大到 130px */
+            width: 130px; height: 130px; 
+            object-fit: contain;
+            /* 增加下方间距，防止压住标题 */
+            margin-bottom: 25px;
+            border-radius: 50%; 
+            /* 增强了光晕和阴影，适应更大的尺寸 */
+            box-shadow: 0 0 0 6px rgba(255,255,255,0.25), 0 12px 28px rgba(0,0,0,0.3); 
+            background: white; padding: 6px;
             position: relative; z-index: 1;
-            /* 开启 CSS 动画 */
-            animation: float 5s ease-in-out infinite; 
+            /* 动画周期调慢到 6s，更显庄重 */
+            animation: float 6s ease-in-out infinite; 
         }
+        /* 定义浮动动画 */
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+            50% { transform: translateY(-10px); } /* 浮动幅度稍微加大 */
             100% { transform: translateY(0px); }
         }
 
-        .header h1 { margin: 0; font-size: 23px; font-weight: 700; letter-spacing: 1px; position: relative; z-index: 1;}
-        .header p { margin: 8px 0 0; font-size: 14px; opacity: 0.85; position: relative; z-index: 1; letter-spacing: 0.5px;}
+        .header h1 { margin: 0; font-size: 24px; font-weight: 700; letter-spacing: 1px; position: relative; z-index: 1; text-shadow: 0 2px 4px rgba(0,0,0,0.2);}
+        .header p { margin: 10px 0 0; font-size: 15px; opacity: 0.9; position: relative; z-index: 1; letter-spacing: 0.5px;}
 
-        /* --- 4. 主体卡片：微量毛玻璃与上浮动画 --- */
+        /* --- 4. 主体卡片样式 --- */
         .container { 
-            max-width: 650px; margin: -35px auto 40px; 
+            max-width: 650px; margin: -40px auto 40px; 
             background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(10px);
             padding: 25px; border-radius: 16px; 
             box-shadow: 0 12px 35px rgba(0,0,0,0.08); 
@@ -72,14 +77,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- 5. 寄语信笺区排版 --- */
+        /* --- 5. 寄语信笺区 --- */
         .notice { 
             background: var(--buaa-light); border-left: 4px solid var(--buaa-blue); 
             padding: 22px 25px; margin-bottom: 30px; font-size: 14.5px; 
             color: #1a2a3a; border-radius: 0 12px 12px 0; line-height: 1.85; 
             position: relative; overflow: hidden;
         }
-        /* 隐形的引号水印 */
         .notice::before {
             content: '“'; position: absolute; top: -15px; left: 15px;
             font-size: 90px; color: rgba(0, 64, 152, 0.05);
@@ -90,7 +94,7 @@
 
         footer { text-align: center; color: #8898aa; font-size: 12px; padding: 0 20px 30px; letter-spacing: 0.5px; }
 
-        /* --- 6. Waline 内部组件深度美化 --- */
+        /* --- 6. Waline 美化 --- */
         .wl-login-info, .wl-power { display: none !important; }
         .wl-panel { border-radius: 12px !important; background: #f8fafc !important; border: 1px solid #e2e8f0 !important; transition: all 0.3s;}
         .wl-panel:focus-within { border-color: var(--buaa-blue) !important; box-shadow: 0 0 0 3px rgba(0,64,152,0.1) !important;}
@@ -124,9 +128,9 @@
         import { init } from 'https://unpkg.com/@waline/client@v3/dist/waline.js';
         init({
             el: '#waline',
-            serverURL: 'https://buaa-hkjz.zeabur.app', // 连接到你极其稳固的大脑
+            serverURL: 'https://buaa-hkjz.zeabur.app',
             lang: 'zh-CN',
-            login: 'disable', // 免登录
+            login: 'disable',
             wordLimit: 300,
             placeholder: '在这里写下你的疑问吧...',
             requiredMeta: ['nick'], 
